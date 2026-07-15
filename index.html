@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Arden'in Oyun Odası v2</title>
+    <title>Arden'in Oyun Odası v3</title>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -247,7 +247,7 @@
         }
         .color-option:active { transform: scale(0.95); }
 
-        /* --- OYUN 4: ARABALAR (YENİ SÜPER SÜRÜŞ SÜRÜMÜ) --- */
+        /* --- OYUN 4: YENİ ARABA SÜRÜŞÜ (GELİŞTİRİLMİŞ) --- */
         #game-cars {
             background: linear-gradient(to bottom, #7CD2FF 0%, #AEE5FF 50%, #76A035 51%, #95C64C 100%);
             overflow: hidden;
@@ -263,12 +263,12 @@
             justify-content: space-between;
         }
 
-        /* Gökyüzü ve Arka Plan Objeleri */
+        /* Bulutların Akışı */
         .scrolling-cloud {
             position: absolute;
             font-size: 40px;
             top: 80px;
-            animation: cloudScroll 12s linear infinite;
+            animation: cloudScroll 18s linear infinite; /* Daha yavaş gökyüzü akışı */
             opacity: 0.8;
         }
         @keyframes cloudScroll {
@@ -285,7 +285,7 @@
             border-top: 8px solid #ECEFF1;
             border-bottom: 8px solid #ECEFF1;
             margin-top: auto;
-            margin-bottom: 120px;
+            margin-bottom: 140px; /* Butonların üstüne taşmaması için boşluk artırıldı */
             box-shadow: inset 0 10px 20px rgba(0,0,0,0.3);
         }
 
@@ -294,7 +294,7 @@
             width: 100%;
             height: 6px;
             background: repeating-linear-gradient(90deg, #FFF, #FFF 40px, transparent 40px, transparent 80px);
-            animation: laneMove 0.4s linear infinite;
+            animation: laneMove 1.0s linear infinite; /* Yol akışı hissedilir derecede yavaşlatıldı */
         }
         .lane-line-1 { top: 80px; }
         .lane-line-2 { top: 160px; }
@@ -309,8 +309,10 @@
             position: absolute;
             font-size: 70px;
             left: 40px;
-            top: 10px; /* Dinamik değişecek (Lanes: 10px, 90px, 160px) */
-            transition: top 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.2);
+            top: 10px;
+            /* scaleX(-1) arabayı yatayda ters çevirerek yüzünün sağa (ileriye) bakmasını sağlar */
+            transform: scaleX(-1);
+            transition: top 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.2);
             z-index: 10;
             filter: drop-shadow(0 8px 5px rgba(0,0,0,0.25));
         }
@@ -324,7 +326,7 @@
             z-index: 5;
         }
 
-        /* Göstergeler */
+        /* Göstergeler (Üst Kısım) */
         #car-hud {
             position: absolute;
             top: 80px;
@@ -337,51 +339,73 @@
         }
 
         .hud-panel {
-            background: rgba(255, 255, 255, 0.9);
-            border: 3px solid #333;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 18px;
+            background: rgba(255, 255, 255, 0.95);
+            border: 3px solid #2C3E50;
+            padding: 10px 20px;
+            border-radius: 24px;
+            font-size: 20px;
             font-weight: bold;
-            box-shadow: 0 6px 0 #333;
+            box-shadow: 0 6px 0 #2C3E50;
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
-        /* Direksiyon / Kontrol Butonları */
+        /* --- 3 YAŞA UYGUN DEV KONTROL PANELİ --- */
         #car-controls-panel {
             position: absolute;
-            bottom: 20px;
+            bottom: 15px;
             width: 100%;
             display: flex;
-            justify-content: space-around;
-            padding: 0 20px;
-            z-index: 30;
+            justify-content: space-evenly;
+            align-items: center;
+            padding: 0 10px;
+            z-index: 90;
         }
 
         .hud-btn {
-            width: 80px;
-            height: 80px;
+            width: 95px;  /* Daha kolay basılması için dev boyut */
+            height: 95px;
             border-radius: 50%;
-            border: 4px solid #333;
-            font-size: 36px;
+            border: 5px solid #2C3E50; /* Çok belirgin kalın kenarlık */
+            font-size: 32px;
             font-weight: bold;
             cursor: pointer;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 8px 0 #333;
+            box-shadow: 0 8px 0 #2C3E50;
             transition: transform 0.1s, box-shadow 0.1s;
         }
         .hud-btn:active {
             transform: translateY(4px);
-            box-shadow: 0 4px 0 #333;
+            box-shadow: 0 4px 0 #2C3E50;
         }
 
-        .btn-up { background: #FFD93D; color: #333; }
-        .btn-down { background: #FFD93D; color: #333; }
-        .btn-horn { background: #FF6B6B; color: white; width: 90px; height: 90px; font-size: 40px; }
+        /* Çocuk Dostu Buton Renkleri */
+        .btn-up { 
+            background: #4CD964; /* Parlak yeşil: Yukarı */
+            color: white; 
+        }
+        .btn-down { 
+            background: #FF3B30; /* Parlak kırmızı: Aşağı */
+            color: white; 
+        }
+        .btn-horn { 
+            background: #FFCC00; /* Parlak sarı: Korna */
+            color: #2C3E50;
+            width: 110px; /* Korna butonu en kolay basılan en büyük buton */
+            height: 110px;
+            font-size: 45px;
+        }
+
+        .btn-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-top: -2px;
+        }
 
         /* Araba Seçme Garaj Ekranı */
         #garage-overlay {
@@ -426,14 +450,14 @@
             background: rgba(255, 255, 255, 0.4);
         }
 
-        /* Arabanın Komik Dönme Hareketi (Yıldız Toplama / Engele Çarpma Efekti) */
+        /* Dönüş (Spin) Efekti - Ölçek koruyarak döndürme */
         .spin-anim {
             animation: carSpin 0.6s ease-out;
         }
         @keyframes carSpin {
-            0% { transform: rotate(0deg) scale(1); }
-            50% { transform: rotate(180deg) scale(1.3); }
-            100% { transform: rotate(360deg) scale(1); }
+            0% { transform: scaleX(-1) rotate(0deg); }
+            50% { transform: scaleX(-1) rotate(180deg) scale(1.3); }
+            100% { transform: scaleX(-1) rotate(360deg); }
         }
 
         /* Tebrik Konfeti Paneli */
@@ -507,12 +531,12 @@
             
             <div id="car-game-wrapper">
                 
-                <div class="scrolling-cloud" style="top:90px; animation-duration: 15s;">☁️</div>
-                <div class="scrolling-cloud" style="top:130px; animation-duration: 22s; font-size: 55px;">☁️</div>
+                <div class="scrolling-cloud" style="top:90px; animation-duration: 20s;">☁️</div>
+                <div class="scrolling-cloud" style="top:130px; animation-duration: 28s; font-size: 55px;">☁️</div>
 
                 <div id="car-hud">
                     <div class="hud-panel">⭐ <span id="car-score">0</span></div>
-                    <div class="hud-panel" style="background:#E8F5E9">⚡ VINN!</div>
+                    <div class="hud-panel" style="background:#E8F5E9; border-color:#4CD964;">⚡ YAVAŞ</div>
                 </div>
 
                 <div id="road-container">
@@ -523,9 +547,17 @@
                 </div>
 
                 <div id="car-controls-panel">
-                    <button class="hud-btn btn-up" onclick="changeCarLane(-1)">▲</button>
-                    <button class="hud-btn btn-horn" onclick="honkCar()">📢</button>
-                    <button class="hud-btn btn-down" onclick="changeCarLane(1)">▼</button>
+                    <button class="hud-btn btn-up" onclick="changeCarLane(-1)">
+                        <span>▲</span>
+                        <span class="btn-label">Yukarı</span>
+                    </button>
+                    
+                    <button class="hud-btn btn-horn" onclick="honkCar()">🎺</button>
+                    
+                    <button class="hud-btn btn-down" onclick="changeCarLane(1)">
+                        <span>▼</span>
+                        <span class="btn-label">Aşağı</span>
+                    </button>
                 </div>
 
                 <div id="garage-overlay">
@@ -626,10 +658,10 @@
 
         function applyPhonetics(text) {
             return text
-                .replace(/Arden/gi, "Arden")
-                .replace(/Arden'e/gi, "Ardene")
-                .replace(/Arden'in/gi, "Ardenin")
-                .replace(/Arden!/gi, "Arden!");
+                .replace(/Arden/gi, "Ar den")
+                .replace(/Arden'e/gi, "Ar dene")
+                .replace(/Arden'in/gi, "Ar denin")
+                .replace(/Arden!/gi, "Ar den!");
         }
 
         function speak(text) {
@@ -799,7 +831,7 @@
 
 
         // ==========================================
-        // OYUN 4: ARABA SÜRÜŞÜ KODLARI (GELİŞMİŞ MOTOR)
+        // OYUN 4: ARABA SÜRÜŞÜ KODLARI (3 YAŞ SÜRÜMÜ)
         // ==========================================
         let playerCarEmoji = '🚗';
         let currentLane = 1; // 0: Üst, 1: Orta, 2: Alt
@@ -868,9 +900,9 @@
             const carElement = document.getElementById('game-player-car');
             const carRect = carElement.getBoundingClientRect();
 
-            // Sıklıkla yeni eşya oluştur
+            // Nesnelerin gelme sıklığını azalttık (Süre 70'ten 100'e çıkarıldı - daha seyrek gelir)
             itemSpawnTimer++;
-            if (itemSpawnTimer > 70) {
+            if (itemSpawnTimer > 100) {
                 spawnRoadItem(road);
                 itemSpawnTimer = 0;
             }
@@ -878,7 +910,11 @@
             // Mevcut eşyaları güncelle ve kaydır
             for (let i = itemsArray.length - 1; i >= 0; i--) {
                 const item = itemsArray[i];
-                item.x -= 4.5; // Kayma hızı
+                
+                // --- ARDEN İÇİN HIZ AYARI ---
+                // Kayma hızı 4.5'ten 2.2'ye düşürüldü. (Yarı yarıya yavaşladı!)
+                item.x -= 2.2; 
+                
                 item.dom.style.right = 'auto';
                 item.dom.style.left = `${item.x}px`;
 
@@ -919,7 +955,6 @@
                 { char: '🐑', isObstacle: true, text: "Koyun!" }
             ];
             
-            // Engellerin çıkma olasılığını dengede tutmak için rastgele seçim
             const chosenType = types[Math.floor(Math.random() * types.length)];
             const randomLane = Math.floor(Math.random() * 3);
 
@@ -946,7 +981,7 @@
             const car = document.getElementById('game-player-car');
             
             if (item.isObstacle) {
-                // Engele çarpma: Komik 360 Spin Hareketi!
+                // Engele çarpma: Komik 360 Spin Hareketi! (Yüzü sağa baka baka döner)
                 playSound('spin');
                 car.classList.add('spin-anim');
                 speak(`Hop! Dikkat et Arden, orada bir ${item.char === '🐮' ? 'inek' : 'koyun'} var!`);
