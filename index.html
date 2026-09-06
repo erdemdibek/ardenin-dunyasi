@@ -18,7 +18,7 @@
                 <h1 class="text-2xl font-bold flex items-center gap-2">
                     <i data-lucide="gem"></i> Takı & Düğün Takibi
                 </h1>
-                <p class="text-indigo-200 text-sm mt-1">GitHub Senkronize Ortak Ajanda</p>
+                <p class="text-indigo-200 text-sm mt-1">GitHub Ortak Düğün Ajandası</p>
             </div>
             <div class="flex items-center gap-2">
                 <button onclick="fetchDataFromGitHub()" class="bg-indigo-500 hover:bg-indigo-400 text-white p-2.5 rounded-xl shadow-sm transition" title="Yenile / Senkronize Et">
@@ -28,7 +28,7 @@
                     <i data-lucide="settings" class="w-4 h-4"></i>
                 </button>
                 <button onclick="openModal()" class="bg-white text-indigo-600 hover:bg-indigo-50 font-semibold px-4 py-2 rounded-xl shadow-sm transition flex items-center gap-2 text-sm">
-                    <i data-lucide="plus-circle" class="w-4 h-4"></i> Kayıt Ekle
+                    <i data-lucide="plus-circle" class="w-4 h-4"></i> Düğün / Takı Ekle
                 </button>
             </div>
         </div>
@@ -40,11 +40,11 @@
         <div id="statusAlert" class="hidden p-4 rounded-xl text-sm font-medium"></div>
 
         <!-- Özet Kartları -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 flex items-center justify-between">
                 <div>
-                    <p class="text-xs font-medium text-slate-400 uppercase tracking-wider">Takı Borcum Var</p>
-                    <h3 id="statDebt" class="text-2xl font-extrabold text-amber-600 mt-1">0 Kayıt</h3>
+                    <p class="text-xs font-medium text-slate-400 uppercase tracking-wider">Geri Ödeyeceğimiz (Borç)</p>
+                    <h3 id="statDebt" class="text-2xl font-extrabold text-amber-600 mt-1">0 Düğün</h3>
                 </div>
                 <div class="bg-amber-50 p-3 rounded-xl text-amber-600">
                     <i data-lucide="arrow-up-right" class="w-6 h-6"></i>
@@ -53,50 +53,55 @@
 
             <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 flex items-center justify-between">
                 <div>
-                    <p class="text-xs font-medium text-slate-400 uppercase tracking-wider">Takılan Düğünler</p>
-                    <h3 id="statGiven" class="text-2xl font-extrabold text-emerald-600 mt-1">0 Kayıt</h3>
+                    <p class="text-xs font-medium text-slate-400 uppercase tracking-wider">İlk Biz Takacağız (Alacak)</p>
+                    <h3 id="statCredit" class="text-2xl font-extrabold text-blue-600 mt-1">0 Düğün</h3>
                 </div>
-                <div class="bg-emerald-50 p-3 rounded-xl text-emerald-600">
-                    <i data-lucide="check-circle-2" class="w-6 h-6"></i>
+                <div class="bg-blue-50 p-3 rounded-xl text-blue-600">
+                    <i data-lucide="arrow-down-left" class="w-6 h-6"></i>
                 </div>
             </div>
 
             <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 flex items-center justify-between">
                 <div>
-                    <p class="text-xs font-medium text-slate-400 uppercase tracking-wider">Planlanan Düğünler</p>
-                    <h3 id="statUpcoming" class="text-2xl font-extrabold text-indigo-600 mt-1">0 Kayıt</h3>
+                    <p class="text-xs font-medium text-slate-400 uppercase tracking-wider">Takılan Düğünler</p>
+                    <h3 id="statCompleted" class="text-2xl font-extrabold text-emerald-600 mt-1">0 Kayıt</h3>
                 </div>
-                <div class="bg-indigo-50 p-3 rounded-xl text-indigo-600">
-                    <i data-lucide="calendar" class="w-6 h-6"></i>
+                <div class="bg-emerald-50 p-3 rounded-xl text-emerald-600">
+                    <i data-lucide="check-circle-2" class="w-6 h-6"></i>
                 </div>
             </div>
         </div>
 
-        <!-- Yaklaşan Düğünler Modülü -->
+        <!-- Yaklaşan Düğünler Modülü (Takvim Görünümü) -->
         <section class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5">
             <div class="flex items-center justify-between mb-4">
                 <h2 class="text-lg font-bold flex items-center gap-2 text-slate-800">
                     <i data-lucide="calendar-days" class="text-indigo-600 w-5 h-5"></i> Yaklaşan Düğün Takvimi
                 </h2>
-                <span class="text-xs bg-indigo-50 text-indigo-600 font-semibold px-2.5 py-1 rounded-full">Gelecek Etkinlikler</span>
+                <span class="text-xs bg-indigo-50 text-indigo-600 font-semibold px-2.5 py-1 rounded-full">Planlanan Düğünler</span>
             </div>
-            <div id="upcomingEventsList" class="space-y-3"></div>
+            <div id="upcomingEventsList" class="space-y-3">
+                <!-- Dinamik Gelecek Düğünler -->
+            </div>
         </section>
 
         <!-- Filtreleme ve Tüm Kayıtlar -->
         <section class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5">
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-5">
                 <h2 class="text-lg font-bold flex items-center gap-2 text-slate-800">
-                    <i data-lucide="history" class="text-indigo-600 w-5 h-5"></i> Tüm Takı Kayıtları
+                    <i data-lucide="history" class="text-indigo-600 w-5 h-5"></i> Tüm Takı & Düğün Kayıtları
                 </h2>
                 <div class="flex gap-2 w-full sm:w-auto overflow-x-auto pb-1 sm:pb-0">
                     <button onclick="filterRecords('all')" id="btnFilterAll" class="px-3 py-1.5 rounded-lg text-xs font-medium bg-indigo-600 text-white transition">Tümü</button>
-                    <button onclick="filterRecords('debt')" id="btnFilterDebt" class="px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200 transition">Borçlarım</button>
-                    <button onclick="filterRecords('completed')" id="btnFilterCompleted" class="px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200 transition">Tamamlananlar</button>
+                    <button onclick="filterRecords('debt')" id="btnFilterDebt" class="px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200 transition">Borcumuz Olanlar</button>
+                    <button onclick="filterRecords('credit')" id="btnFilterCredit" class="px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200 transition">Bizim Takacaklarımız</button>
+                    <button onclick="filterRecords('completed')" id="btnFilterCompleted" class="px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200 transition">Takılanlar</button>
                 </div>
             </div>
 
-            <div id="recordsList" class="divide-y divide-slate-100"></div>
+            <div id="recordsList" class="divide-y divide-slate-100">
+                <!-- Dinamik Tüm Liste -->
+            </div>
         </section>
 
     </main>
@@ -110,11 +115,11 @@
             <form onsubmit="handleSaveConfig(event)" class="space-y-4">
                 <div>
                     <label class="block text-xs font-semibold text-slate-600 mb-1">GitHub Kullanıcı Adı</label>
-                    <input type="text" id="cfgUsername" required placeholder="Örn: ahmet" class="w-full px-3 py-2 border rounded-xl text-sm">
+                    <input type="text" id="cfgUsername" required placeholder="Örn: erdemdibek" class="w-full px-3 py-2 border rounded-xl text-sm">
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-slate-600 mb-1">Repository (Depo) Adı</label>
-                    <input type="text" id="cfgRepo" required placeholder="taki-takip" class="w-full px-3 py-2 border rounded-xl text-sm">
+                    <input type="text" id="cfgRepo" required placeholder="ardenin-dunyasi" class="w-full px-3 py-2 border rounded-xl text-sm">
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-slate-600 mb-1">Personal Access Token (PAT)</label>
@@ -129,7 +134,7 @@
 
     <!-- Kayıt Ekle / Düzenle Modal -->
     <div id="recordModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
-        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
             <button onclick="closeModal()" class="absolute right-4 top-4 text-slate-400 hover:text-slate-600">
                 <i data-lucide="x" class="w-5 h-5"></i>
             </button>
@@ -138,7 +143,7 @@
             <form id="recordForm" onsubmit="handleSaveRecord(event)" class="space-y-4">
                 <input type="hidden" id="recordId">
                 <div>
-                    <label class="block text-xs font-semibold text-slate-600 mb-1">Evlenen Kişi / Ev Sahibi</label>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Evlenen Kişi / Düğün Sahibi</label>
                     <input type="text" id="personName" required placeholder="Örn: Ahmet Yılmaz" class="w-full px-3 py-2 border rounded-xl text-sm">
                 </div>
                 <div class="grid grid-cols-2 gap-3">
@@ -156,22 +161,35 @@
                         </select>
                     </div>
                 </div>
+
+                <!-- Borç / İlişki Durumu Seçimi -->
                 <div>
-                    <label class="block text-xs font-semibold text-slate-600 mb-1">Takılan / Takılacak Takı</label>
-                    <input type="text" id="jewelryDetail" placeholder="Örn: Çeyrek Altın, 2000 TL" class="w-full px-3 py-2 border rounded-xl text-sm">
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-slate-600 mb-1">Takı Durumu</label>
-                    <select id="status" class="w-full px-3 py-2 border rounded-xl text-sm bg-white">
-                        <option value="completed">Takıldı (Borç Kapandı)</option>
-                        <option value="debt">Borç Var (Götürülecek)</option>
-                        <option value="planned">Planlandı (Yaklaşan Düğün)</option>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Takı / Borç İlişkisi</label>
+                    <select id="relationType" class="w-full px-3 py-2 border rounded-xl text-sm bg-white font-medium">
+                        <option value="debt">Önceden Bize Takılmıştı (Bizim Takı Borcumuz Var)</option>
+                        <option value="credit">İlk Biz Takacağız (İleride Bize Takılacak)</option>
+                        <option value="neutral">Karşılıklı Borç Yok (Hediye / Normal Takı)</option>
                     </select>
                 </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Takılacak / Takılan Takı</label>
+                    <input type="text" id="jewelryDetail" placeholder="Örn: Çeyrek Altın, 2000 TL" class="w-full px-3 py-2 border rounded-xl text-sm">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Düğüne Katılım / Takı Durumu</label>
+                    <select id="isCompleted" class="w-full px-3 py-2 border rounded-xl text-sm bg-white">
+                        <option value="false">Bekliyor (Henüz Takılmadı / Düğün Yaklaşıyor)</option>
+                        <option value="true">Takıldı (Gidildi ve Takı Takıldı)</option>
+                    </select>
+                </div>
+
                 <div>
                     <label class="block text-xs font-semibold text-slate-600 mb-1">Notlar</label>
-                    <textarea id="notes" rows="2" class="w-full px-3 py-2 border rounded-xl text-sm"></textarea>
+                    <textarea id="notes" rows="2" placeholder="Örn: Bize 2023 düğününde yarım altın takmışlardı." class="w-full px-3 py-2 border rounded-xl text-sm"></textarea>
                 </div>
+
                 <div class="flex gap-3 pt-2">
                     <button type="button" onclick="closeModal()" class="w-1/2 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-600 font-semibold rounded-xl text-sm transition">İptal</button>
                     <button type="submit" id="saveBtn" class="w-1/2 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl text-sm transition">Kaydet</button>
@@ -183,7 +201,7 @@
     <!-- JavaScript Mantığı -->
     <script>
         let records = [];
-        let fileSha = ''; // GitHub API SHA değeri
+        let fileSha = '';
         let activeFilter = 'all';
 
         let config = JSON.parse(localStorage.getItem('gh_config')) || { username: '', repo: '', token: '' };
@@ -196,7 +214,6 @@
             }
         });
 
-        // GitHub REST API'den veriyi oku
         async function fetchDataFromGitHub() {
             setSyncing(true);
             const url = `https://api.github.com/repos/${config.username}/${config.repo}/contents/data.json`;
@@ -204,12 +221,11 @@
                 const res = await fetch(url, {
                     headers: { 'Authorization': `token ${config.token}`, 'Accept': 'application/vnd.github.v3+json' }
                 });
-                if (!res.ok) throw new Error('GitHub verisi alınamadı. Ayarları kontrol edin.');
+                if (!res.ok) throw new Error('GitHub verisi alınamadı. Ayarları veya Token izinlerini kontrol edin.');
                 
                 const data = await res.json();
                 fileSha = data.sha;
                 
-                // Base64 şifresini çöz
                 const content = decodeURIComponent(escape(atob(data.content)));
                 records = JSON.parse(content || '[]');
                 
@@ -222,7 +238,6 @@
             }
         }
 
-        // GitHub REST API'ye güncellenmiş veriyi gönder
         async function pushDataToGitHub(newRecords) {
             setSyncing(true);
             const url = `https://api.github.com/repos/${config.username}/${config.repo}/contents/data.json`;
@@ -249,9 +264,9 @@
                 if (!res.ok) throw new Error('GitHub güncellemesi başarısız oldu.');
                 
                 const resData = await res.json();
-                fileSha = resData.content.sha; // Yeni SHA'yı kaydet
+                fileSha = resData.content.sha;
                 records = newRecords;
-                showAlert('Değişiklikler GitHub\'a kaydedildi!', 'bg-emerald-100 text-emerald-800');
+                showAlert('Değişiklikler GitHub\'a başarıyla kaydedildi!', 'bg-emerald-100 text-emerald-800');
                 renderApp();
             } catch (err) {
                 showAlert(err.message, 'bg-red-100 text-red-800');
@@ -266,8 +281,9 @@
             const personName = document.getElementById('personName').value;
             const eventDate = document.getElementById('eventDate').value;
             const eventType = document.getElementById('eventType').value;
+            const relationType = document.getElementById('relationType').value;
             const jewelryDetail = document.getElementById('jewelryDetail').value;
-            const status = document.getElementById('status').value;
+            const isCompleted = document.getElementById('isCompleted').value === 'true';
             const notes = document.getElementById('notes').value;
 
             let updatedRecords = [...records];
@@ -275,12 +291,12 @@
             if (id) {
                 const idx = updatedRecords.findIndex(r => r.id === id);
                 if (idx !== -1) {
-                    updatedRecords[idx] = { id, personName, eventDate, eventType, jewelryDetail, status, notes };
+                    updatedRecords[idx] = { id, personName, eventDate, eventType, relationType, jewelryDetail, isCompleted, notes };
                 }
             } else {
                 updatedRecords.push({
                     id: Date.now().toString(),
-                    personName, eventDate, eventType, jewelryDetail, status, notes
+                    personName, eventDate, eventType, relationType, jewelryDetail, isCompleted, notes
                 });
             }
 
@@ -289,7 +305,7 @@
         }
 
         function deleteRecord(id) {
-            if (confirm('Bu kaydı silip GitHub\'dan kaldırmak istediğinize emin misiniz?')) {
+            if (confirm('Bu kaydı silmek istediğinize emin misiniz?')) {
                 const updatedRecords = records.filter(r => r.id !== id);
                 pushDataToGitHub(updatedRecords);
             }
@@ -315,22 +331,26 @@
         }
 
         function renderStats() {
-            const debt = records.filter(r => r.status === 'debt').length;
-            const completed = records.filter(r => r.status === 'completed').length;
-            const upcoming = records.filter(r => new Date(r.eventDate) >= new Date()).length;
+            const debt = records.filter(r => r.relationType === 'debt' && !r.isCompleted).length;
+            const credit = records.filter(r => r.relationType === 'credit' && !r.isCompleted).length;
+            const completed = records.filter(r => r.isCompleted).length;
 
-            document.getElementById('statDebt').innerText = `${debt} Kayıt`;
-            document.getElementById('statGiven').innerText = `${completed} Kayıt`;
-            document.getElementById('statUpcoming').innerText = `${upcoming} Etkinlik`;
+            document.getElementById('statDebt').innerText = `${debt} Düğün`;
+            document.getElementById('statCredit').innerText = `${credit} Düğün`;
+            document.getElementById('statCompleted').innerText = `${completed} Düğün`;
         }
 
         function renderUpcomingEvents() {
             const container = document.getElementById('upcomingEventsList');
             const today = new Date().toISOString().split('T')[0];
-            const upcoming = records.filter(r => r.eventDate >= today).sort((a, b) => new Date(a.eventDate) - new Date(b.eventDate));
+            
+            // Gelecek ve henüz takı takılmamış düğünler
+            const upcoming = records
+                .filter(r => r.eventDate >= today && !r.isCompleted)
+                .sort((a, b) => new Date(a.eventDate) - new Date(b.eventDate));
 
             if (upcoming.length === 0) {
-                container.innerHTML = `<p class="text-sm text-slate-400 py-4 text-center">Planlanmış düğün bulunmuyor.</p>`;
+                container.innerHTML = `<p class="text-sm text-slate-400 py-4 text-center">Planlanmış yaklaşan düğün bulunmuyor.</p>`;
                 return;
             }
 
@@ -349,8 +369,8 @@
                                 <p class="text-xs text-slate-500">${r.eventType} • ${escapeHtml(r.jewelryDetail || 'Takı Belirtilmedi')}</p>
                             </div>
                         </div>
-                        <span class="text-xs px-2.5 py-1 rounded-full font-medium ${getStatusBadgeClass(r.status)}">
-                            ${getStatusLabel(r.status)}
+                        <span class="text-xs px-2.5 py-1 rounded-full font-semibold ${getRelationBadgeClass(r.relationType)}">
+                            ${getRelationLabel(r.relationType)}
                         </span>
                     </div>
                 `;
@@ -360,8 +380,11 @@
         function renderRecords() {
             const container = document.getElementById('recordsList');
             let filtered = records;
-            if (activeFilter === 'debt') filtered = records.filter(r => r.status === 'debt');
-            if (activeFilter === 'completed') filtered = records.filter(r => r.status === 'completed');
+            
+            if (activeFilter === 'debt') filtered = records.filter(r => r.relationType === 'debt');
+            if (activeFilter === 'credit') filtered = records.filter(r => r.relationType === 'credit');
+            if (activeFilter === 'completed') filtered = records.filter(r => r.isCompleted);
+            
             filtered.sort((a, b) => new Date(b.eventDate) - new Date(a.eventDate));
 
             if (filtered.length === 0) {
@@ -374,9 +397,10 @@
                     <div class="space-y-1">
                         <div class="flex items-center gap-2">
                             <h4 class="font-semibold text-slate-800 text-base">${escapeHtml(r.personName)}</h4>
-                            <span class="text-xs px-2 py-0.5 rounded-md font-medium ${getStatusBadgeClass(r.status)}">
-                                ${getStatusLabel(r.status)}
+                            <span class="text-xs px-2 py-0.5 rounded-md font-medium ${getRelationBadgeClass(r.relationType)}">
+                                ${getRelationLabel(r.relationType)}
                             </span>
+                            ${r.isCompleted ? `<span class="text-xs px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-700 font-medium">✓ Takıldı</span>` : ''}
                         </div>
                         <p class="text-xs text-slate-500 flex items-center gap-3">
                             <span><i data-lucide="calendar" class="w-3.5 h-3.5 inline mr-1"></i>${formatDate(r.eventDate)}</span>
@@ -400,8 +424,9 @@
             document.getElementById('personName').value = r.personName;
             document.getElementById('eventDate').value = r.eventDate;
             document.getElementById('eventType').value = r.eventType;
+            document.getElementById('relationType').value = r.relationType || 'neutral';
             document.getElementById('jewelryDetail').value = r.jewelryDetail || '';
-            document.getElementById('status').value = r.status;
+            document.getElementById('isCompleted').value = r.isCompleted ? 'true' : 'false';
             document.getElementById('notes').value = r.notes || '';
             document.getElementById('modalTitle').innerText = 'Kayıt Düzenle';
             openModal();
@@ -409,11 +434,13 @@
 
         function filterRecords(type) {
             activeFilter = type;
-            ['All', 'Debt', 'Completed'].forEach(t => {
+            ['All', 'Debt', 'Credit', 'Completed'].forEach(t => {
                 const btn = document.getElementById(`btnFilter${t}`);
-                btn.className = (t.toLowerCase() === type) 
-                    ? 'px-3 py-1.5 rounded-lg text-xs font-medium bg-indigo-600 text-white transition'
-                    : 'px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200 transition';
+                if (btn) {
+                    btn.className = (t.toLowerCase() === type) 
+                        ? 'px-3 py-1.5 rounded-lg text-xs font-medium bg-indigo-600 text-white transition'
+                        : 'px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200 transition';
+                }
             });
             renderRecords();
             lucide.createIcons();
@@ -424,6 +451,7 @@
             document.getElementById('recordModal').classList.replace('flex', 'hidden');
             document.getElementById('recordForm').reset();
             document.getElementById('recordId').value = '';
+            document.getElementById('modalTitle').innerText = 'Yeni Düğün / Takı Ekle';
         }
 
         function openConfigModal() {
@@ -448,16 +476,16 @@
             setTimeout(() => el.classList.add('hidden'), 4000);
         }
 
-        function getStatusBadgeClass(s) {
-            if (s === 'completed') return 'bg-emerald-100 text-emerald-700';
-            if (s === 'debt') return 'bg-amber-100 text-amber-700';
-            return 'bg-indigo-100 text-indigo-700';
+        function getRelationBadgeClass(type) {
+            if (type === 'debt') return 'bg-amber-100 text-amber-700';
+            if (type === 'credit') return 'bg-blue-100 text-blue-700';
+            return 'bg-slate-100 text-slate-700';
         }
 
-        function getStatusLabel(s) {
-            if (s === 'completed') return 'Takıldı';
-            if (s === 'debt') return 'Borç Var';
-            return 'Planlandı';
+        function getRelationLabel(type) {
+            if (type === 'debt') return 'Borcumuz Var';
+            if (type === 'credit') return 'İlk Biz Takacağız';
+            return 'Borçsuz / Hediye';
         }
 
         function formatDate(dStr) {
