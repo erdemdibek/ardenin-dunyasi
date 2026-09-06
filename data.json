@@ -1,5 +1,15 @@
 [
   {
+    "id": "1788694988495",
+    "personName": "Kerem Kına",
+    "eventDate": "2027-08-28",
+    "eventType": "Kına",
+    "relationType": "neutral",
+    "jewelryDetail": "",
+    "isCompleted": false,
+    "notes": ""
+  },
+  {
     "id": "1788694930064",
     "personName": "İbo Düğün",
     "eventDate": "2027-07-17",
@@ -30,10 +40,10 @@
     "notes": ""
   },
   {
-    "id": "1788694988495",
-    "personName": "Kerem Kına",
-    "eventDate": "2027-08-28",
-    "eventType": "Kına",
+    "id": "1788695004938",
+    "personName": "Kerem Düğün",
+    "eventDate": "2027-08-29",
+    "eventType": "Düğün",
     "relationType": "neutral",
     "jewelryDetail": "",
     "isCompleted": false,
