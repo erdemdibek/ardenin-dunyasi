@@ -1,5 +1,15 @@
 [
   {
+    "id": "1788695004938",
+    "personName": "Kerem Düğün",
+    "eventDate": "2027-08-29",
+    "eventType": "Düğün",
+    "relationType": "neutral",
+    "jewelryDetail": "",
+    "isCompleted": false,
+    "notes": ""
+  },
+  {
     "id": "1788694988495",
     "personName": "Kerem Kına",
     "eventDate": "2027-08-28",
@@ -33,19 +43,9 @@
     "id": "1788694119068",
     "personName": "Kerem Söz",
     "eventDate": "2026-09-20",
-    "eventType": "Nişan",
+    "eventType": "Söz",
     "relationType": "neutral",
     "jewelryDetail": "Çeyrek Altın",
-    "isCompleted": false,
-    "notes": ""
-  },
-  {
-    "id": "1788695004938",
-    "personName": "Kerem Düğün",
-    "eventDate": "2027-08-29",
-    "eventType": "Düğün",
-    "relationType": "neutral",
-    "jewelryDetail": "",
     "isCompleted": false,
     "notes": ""
   }
