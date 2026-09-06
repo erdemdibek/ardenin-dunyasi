@@ -8,5 +8,15 @@
     "jewelryDetail": "Çeyrek Altın",
     "isCompleted": false,
     "notes": ""
+  },
+  {
+    "id": "1788694858608",
+    "personName": "Kerem Nişan",
+    "eventDate": "2027-05-30",
+    "eventType": "Düğün",
+    "relationType": "neutral",
+    "jewelryDetail": "",
+    "isCompleted": false,
+    "notes": ""
   }
 ]
