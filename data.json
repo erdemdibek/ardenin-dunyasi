@@ -1,5 +1,15 @@
 [
   {
+    "id": "1788694858608",
+    "personName": "Kerem Nişan",
+    "eventDate": "2027-05-30",
+    "eventType": "Düğün",
+    "relationType": "neutral",
+    "jewelryDetail": "",
+    "isCompleted": false,
+    "notes": ""
+  },
+  {
     "id": "1788694119068",
     "personName": "Kerem Söz",
     "eventDate": "2026-09-20",
@@ -10,11 +20,11 @@
     "notes": ""
   },
   {
-    "id": "1788694858608",
-    "personName": "Kerem Nişan",
-    "eventDate": "2027-05-30",
+    "id": "1788694930064",
+    "personName": "İbo Düğün",
+    "eventDate": "2027-07-17",
     "eventType": "Düğün",
-    "relationType": "neutral",
+    "relationType": "credit",
     "jewelryDetail": "",
     "isCompleted": false,
     "notes": ""
